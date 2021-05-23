@@ -63,7 +63,7 @@ export default function Layout({children, title, categories}){
     const classes = useStyles()
     const [drawerOpen, setDrawerOpen] = React.useState(false);
     let nav = [];
-    categories.forEach((item, index) => { nav[item.display] = index == 0 ? true : false });
+    categories.forEach((item, index) => { nav[item.display] = index == 0 });
     const [navOpen, setNavOpen] = React.useState(nav);
     const toggleDrawerOpen = () => {
         setDrawerOpen(!drawerOpen);
