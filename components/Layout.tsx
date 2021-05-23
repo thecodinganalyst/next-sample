@@ -1,24 +1,79 @@
-import {AppBar, createStyles, CssBaseline, IconButton, makeStyles, Toolbar, Typography} from "@material-ui/core";
+import {
+    AppBar,
+    createStyles,
+    CssBaseline,
+    Drawer,
+    IconButton, List,
+    makeStyles,
+    Toolbar,
+    Typography
+} from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
+import React from "react";
+import Navigation from "./navigation";
+import clsx from "clsx";
 
-export default function Layout({children, title}){
+export default function Layout({children, title, categories}){
+    const drawerWidth = 250;
     const useStyles = makeStyles((theme) =>
         createStyles({
+            root: {
+                display: 'flex',
+            },
+            appBar: {
+                zIndex: 2000,
+            },
+            drawer: {
+                width: drawerWidth,
+                flexShrink: 0,
+            },
+            drawerPaper: {
+                width: drawerWidth,
+            },
+            drawerHeader: {
+                display: 'flex',
+                alignItems: 'center',
+                padding: theme.spacing(0, 1),
+                // necessary for content to be below app bar
+                ...theme.mixins.toolbar,
+                justifyContent: 'flex-end',
+            },
             main: {
-                marginTop: 84,
-                marginLeft: 24,
-                marginRight: 24,
-                marginBottom: 24,
+                flexGrow: 1,
+                padding: theme.spacing(3),
+                transition: theme.transitions.create('margin', {
+                    easing: theme.transitions.easing.sharp,
+                    duration: theme.transitions.duration.leavingScreen,
+                }),
+                marginLeft: -drawerWidth,
+                marginTop: theme.spacing(8),
+            },
+            mainShift: {
+                transition: theme.transitions.create('margin', {
+                    easing: theme.transitions.easing.easeOut,
+                    duration: theme.transitions.duration.enteringScreen,
+                }),
+                marginLeft: 0,
+            },
+            nested: {
+                paddingLeft: theme.spacing(4),
             }
         })
     )
     const classes = useStyles()
+    const [drawerOpen, setDrawerOpen] = React.useState(false);
+    let nav = [];
+    categories.forEach((item, index) => { nav[item.display] = index == 0 ? true : false });
+    const [navOpen, setNavOpen] = React.useState(nav);
+    const toggleDrawerOpen = () => {
+        setDrawerOpen(!drawerOpen);
+    }
     return (
-        <>
+        <div className={classes.root}>
             <CssBaseline />
-            <AppBar>
+            <AppBar className={classes.appBar}>
                 <Toolbar>
-                    <IconButton color="inherit">
+                    <IconButton color="inherit" onClick={toggleDrawerOpen}>
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" className="LayoutTitle" noWrap>
@@ -26,10 +81,17 @@ export default function Layout({children, title}){
                     </Typography>
                 </Toolbar>
             </AppBar>
-            <main className={classes.main}>
+            <Drawer variant="persistent" className={classes.drawer} classes={{paper: classes.drawerPaper}} anchor="left" open={drawerOpen}>
+                <div className={classes.drawerHeader}>&nbsp;</div>
+                <List component="nav">
+                    { categories.map((category) => (
+                        <Navigation key={category.display} category={category} expanded={navOpen[category.display]} nestedClass={classes.nested} />
+                    ))}
+                </List>
+            </Drawer>
+            <main className={clsx(classes.main, {[classes.mainShift]: drawerOpen,})}>
                 {children}
             </main>
-        </>
+        </div>
     );
 }
-
