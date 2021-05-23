@@ -19,13 +19,13 @@ export default function Navigation(props){
             <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
                     { category.items.map((Item) => (
-                        <ListItem button key={Item.display} className={props.nestedClass} >
-                            <Link href={Item.link}>
-                                <a>
+                        <Link key={Item.display} href={Item.link}>
+                            <a>
+                                <ListItem button className={props.nestedClass} >
                                     <ListItemText primary={Item.display} />
-                                </a>
-                            </Link>
-                        </ListItem>
+                                </ListItem>
+                            </a>
+                        </Link>
                     )) }
                 </List>
             </Collapse>
