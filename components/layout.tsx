@@ -3,7 +3,7 @@ import {
     createStyles,
     CssBaseline,
     Drawer,
-    IconButton, List,
+    IconButton, List, Link,
     makeStyles,
     Toolbar,
     Typography
@@ -22,6 +22,9 @@ export default function Layout({children, title, categories}){
             },
             appBar: {
                 zIndex: 2000,
+            },
+            title: {
+
             },
             drawer: {
                 width: drawerWidth,
@@ -76,9 +79,11 @@ export default function Layout({children, title, categories}){
                     <IconButton color="inherit" onClick={toggleDrawerOpen}>
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" className="LayoutTitle" noWrap>
-                        {title}
-                    </Typography>
+                    <Link href="/" color="inherit">
+                        <Typography variant="h6" className="title" noWrap>
+                            {title}
+                        </Typography>
+                    </Link>
                 </Toolbar>
             </AppBar>
             <Drawer variant="persistent" className={classes.drawer} classes={{paper: classes.drawerPaper}} anchor="left" open={drawerOpen}>
