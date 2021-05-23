@@ -5,6 +5,6 @@ describe('Home page', () => {
   })
 
   it('Should display the app bar', () => {
-    cy.get('.LayoutTitle').contains('Next Sample')
+    cy.get('.title').contains('Next Sample')
   })
 })
