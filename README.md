@@ -1,34 +1,17 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This is a boilerplate for a static website generator created with NextJS on React, using Material UI for the layout, and Cypress for testing. It also uses Typescript instead of javascript. 
 
-## Getting Started
+This project will create a simple website with an Appbar and a Drawer with navigation menu at the side. The navigation menu can be altered by altering the return from the `getNavigation()` function in `/lib/content.ts`. The navigation menu is arranged by categories and item, so to modify the content for any of the pages, you'll need to modify the `/pages/[category]/[item].tsx`. 
 
-First, run the development server:
+The `index.tsx` is the main page, and it uses the `Layout` component from `/components/layout.tsx` which provides the Appbar and Drawer, so that it can be easily integrated in all the pages. It employs the `Navigation` component for each category of the navigation. 
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+The `getStaticPaths()` in `/pages/[category]/[item].tsx` needs to return all the possible paths from /[category]/[item], in the format [{params: {category: cat1, item: item1}}, {params: {category: cat1, item: item2}}, ...]. And all the contents from all possible links within /[category]/[item] are handled in this file. 
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+To setup the project after downloading/cloning it from github, simply run `npm install`, to get all the dependencies installed.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+To run in dev, `npm run dev`. 
+To build it for production, `npm run build` to build it and `npm run start` to run it on localhost:3000.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+To run the test, `npx cypress open`
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+For more information on how this is set up, please refer to the below blog post.
+https://thecodinganalyst.github.io/knowledgebase/create-a-new-nextjs-site-with-typescript-materialui-and-cypress/
